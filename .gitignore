@@ -2,8 +2,5 @@ __pycache__/
 env/
 .mypy_cache/
 .vscode/
-config.*
 help.txt
 *.db
-webapp/__init__.py
-create_db_tables.py

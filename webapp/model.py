@@ -1,10 +1,10 @@
+from db import Base
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, Date, Text
+from sqlalchemy import Column, Date, Integer, String, Text
 from sqlalchemy.orm import relationship
 
-from db import Base
-
 db = SQLAlchemy()
+
 
 class User(Base):
     __tablename__ = "Админ/Пользователь"
@@ -18,6 +18,7 @@ class User(Base):
     def __repr__(self):
         return f"Пользователь {self.id}, {self.username}"
 
+
 class Customer(Base):
     __tablename__ = "Покупатель"
 
@@ -27,6 +28,7 @@ class Customer(Base):
     email = Column(String)
     bot_id = Column(String)
 
+
 class Product(Base):
     __tablename__ = "Товар"
 
@@ -34,6 +36,7 @@ class Product(Base):
     title = Column(String)
     price = Column(Integer)
     descr = Column(Text)
+
 
 class Order(Base):
     __tablename__ = "Заказ"
@@ -44,6 +47,7 @@ class Order(Base):
     payment = Column(Integer)
     address = Column(String)
     status = Column(String)
+
 
 class Picture(Base):
     __tablename__ = "Картинка"

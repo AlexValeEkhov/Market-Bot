@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body class="text-center">
+
+  <main class="position-absolute top-50 start-50 translate-middle">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-warning" role="alert">
+      {% for message in messages %}
+      {{ message }}<br>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('user.process_login') }}" method="post">
+      {{ form.hidden_tag() }}
+      <h1 class="h3 mb-3 fw-normal">Войдите в аккаунт</h1>
+
+      <div class="form-group">
+        {{ form.username.label }}
+        {{ form.username() }}
+      </div>
+      <div class="form-group">
+        {{ form.password.label }}
+        {{ form.password() }}
+      </div>
+      <div class="checkbox mb-3">
+        {{ form.remember_me() }}
+        {{ form.remember_me.label(class_='form-check-label') }}
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+    </form>
+  </main>
+
+
+
+</body>
+{% endblock %}
