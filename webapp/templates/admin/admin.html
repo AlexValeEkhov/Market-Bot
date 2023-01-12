@@ -1,11 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
 <body>
     <h2 style="text-align:center">Панель управления миром</h2>
 
-    <a href="/admin/add_artist" class="btn btn-success">Добавить художника</a>
-    <a href="/admin/add_picture" class="btn btn-success">Добавить картину</a>
+    <a href="/catalogue/add_artist" class="btn btn-success">Добавить художника</a>
+    <a href="/catalogue/add_picture" class="btn btn-success">Добавить картину</a>
 </body>
 {% endblock %}

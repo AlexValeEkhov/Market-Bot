@@ -7,6 +7,7 @@ from webapp.db import db
 from webapp.catalogue.models import Artist, Product
 from webapp.user.models import User
 from webapp.user.routes import blueprint as user_blueprint
+from webapp.catalogue.routes import blueprint as catalogue_blueprint
 
 
 def create_app():
@@ -27,6 +28,8 @@ def create_app():
     app.register_blueprint(user_blueprint)
     app.register_blueprint(cart_blueprint)
     app.register_blueprint(admin_blueprint)
+    app.register_blueprint(catalogue_blueprint)
+
 
     @login_manager.user_loader
     def load_user(user_id):
