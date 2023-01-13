@@ -1,13 +1,14 @@
 from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_migrate import Migrate
-from webapp.admin.routes import blueprint as admin_blueprint
-from webapp.cart.routes import blueprint as cart_blueprint
+
 from webapp.db import db
-from webapp.catalogue.models import Artist, Product
-from webapp.user.models import User
-from webapp.user.routes import blueprint as user_blueprint
-from webapp.catalogue.routes import blueprint as catalogue_blueprint
+from webapp.models.catalogue_models import Artist, Product
+from webapp.models.user_models import User
+from webapp.routes.admin_routes import blueprint as admin_blueprint
+from webapp.routes.cart_routes import blueprint as cart_blueprint
+from webapp.routes.catalogue_routes import blueprint as catalogue_blueprint
+from webapp.routes.user_routes import blueprint as user_blueprint
 
 
 def create_app():
@@ -18,7 +19,7 @@ def create_app():
 
     login_manager = LoginManager()
     login_manager.init_app(app)
-    login_manager.login_view = 'user.login'
+    login_manager.login_view = "user.login"
 
     @app.route("/")
     def main():
@@ -29,7 +30,6 @@ def create_app():
     app.register_blueprint(cart_blueprint)
     app.register_blueprint(admin_blueprint)
     app.register_blueprint(catalogue_blueprint)
-
 
     @login_manager.user_loader
     def load_user(user_id):

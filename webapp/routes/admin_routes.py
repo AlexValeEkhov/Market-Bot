@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
-from webapp.user.decorators import admin_required
+from flask import Blueprint, flash, redirect, render_template, url_for
+
 from webapp import db
-from webapp.catalogue.forms import ArtistForm, ProductForm
-from webapp.catalogue.models import Artist, Product
+from webapp.forms.catalogue_forms import ArtistForm, ProductForm
+from webapp.functions.decorators import admin_required
+from webapp.models.catalogue_models import Artist, Product
 
 blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -46,7 +47,7 @@ def process_add_artist():
 
 @blueprint.route("/add_picture")
 @admin_required
-def add_product():
+def add_picture():
     form = ProductForm()
     title = "Панель админа"
     return render_template("admin/add_picture.html", page_title=title, form=form)
@@ -65,10 +66,16 @@ def process_add_picture():
             artist_id=form.artist_id.data,
             size=form.size.data,
         )
-        db.session.add(new_picture)
-        db.session.commit()
-        flash("Вы успешно добавили картину")
-        return redirect(url_for("admin.admin"))
+        artist = Artist.query.filter_by(name=form.artist_id.data).first()
+        if artist:
+            new_picture.artist_id = artist.id
+            db.session.add(new_picture)
+            db.session.commit()
+            flash("Вы успешно добавили картину")
+            return redirect(url_for("admin.admin"))
+        else:
+            flash("Такого художника нет в базе")
+            return redirect(url_for("admin.add_picture"))
     else:
         for field, errors in form.errors.items():
             for error in errors:

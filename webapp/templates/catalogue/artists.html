@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{ name }}</h3>
+<img src="{{ url_for('static', filename=photo)}}">
+<h4>{{ text }}</h4>
+{% endblock %}

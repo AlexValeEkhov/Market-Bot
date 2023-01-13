@@ -1,4 +1,5 @@
 from sqlalchemy import ForeignKey
+
 from webapp.db import db
 
 

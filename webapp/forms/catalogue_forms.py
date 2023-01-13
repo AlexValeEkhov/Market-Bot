@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, StringField, SubmitField
+from wtforms import FileField, StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 
 
@@ -14,7 +14,7 @@ class ArtistForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
     )
-    photo_url = StringField(
+    photo_url = FileField(
         "Фотография",
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
@@ -26,7 +26,7 @@ class ProductForm(FlaskForm):
     title = StringField("Название картины", validators=[DataRequired()], render_kw={"class": "form-control"})
     price = StringField("Цена", validators=[DataRequired()], render_kw={"class": "form-control"})
     text = TextAreaField("Описание", validators=[DataRequired()], render_kw={"class": "form-control"})
-    picture_url = StringField("Файл изображения", validators=[DataRequired()], render_kw={"class": "form-control"})
+    picture_url = FileField("Файл изображения", validators=[DataRequired()], render_kw={"class": "form-control"})
     year = StringField("Год", validators=[DataRequired()], render_kw={"class": "form-control"})
     artist_id = StringField("Художник", validators=[DataRequired()], render_kw={"class": "form-control"})
     size = StringField("Размер", validators=[DataRequired()], render_kw={"class": "form-control"})
