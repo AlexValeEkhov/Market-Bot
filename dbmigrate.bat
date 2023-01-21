@@ -1,2 +1,2 @@
-set FLASK_APP=webapp && flask db migrate -m "+ Artist, Product tables, add nullables"
+set FLASK_APP=webapp && flask db migrate -m "+ Order"
 flask db upgrade

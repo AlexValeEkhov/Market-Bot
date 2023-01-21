@@ -3,7 +3,6 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 
 from webapp.db import db
-from webapp.models.catalogue_models import Artist, Product
 from webapp.models.user_models import User
 from webapp.routes.admin_routes import blueprint as admin_blueprint
 from webapp.routes.cart_routes import blueprint as cart_blueprint

@@ -5,37 +5,37 @@ from webapp import db
 from webapp.forms.user_forms import LoginForm, RegistrationForm
 from webapp.models.user_models import User
 
-blueprint = Blueprint('user', __name__, url_prefix='/users')
+blueprint = Blueprint("user", __name__, url_prefix="/users")
 
 
 @blueprint.route("/login")
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main'))
+        return redirect(url_for("main"))
     title = "Авторизация"
     login_form = LoginForm()
-    return render_template('user/login.html', page_title=title, form=login_form)
+    return render_template("user/login.html", page_title=title, form=login_form)
 
 
-@blueprint.route('/process-login', methods=['POST'])
+@blueprint.route("/process-login", methods=["POST"])
 def process_login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect(url_for('main'))
-    flash('Неправильное имя пользователя или пароль')
-    return redirect(url_for('user.login'))
+            return redirect(url_for("main"))
+    flash("Неправильное имя пользователя или пароль")
+    return redirect(url_for("user.login"))
 
 
-@blueprint.route('/logout')
+@blueprint.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('main'))
+    return redirect(url_for("main"))
 
 
-@blueprint.route('/registration')
+@blueprint.route("/registration")
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("main"))
@@ -57,5 +57,9 @@ def process_reg():
     else:
         for field, errors in form.errors.items():
             for error in errors:
-                flash('Ошибка в поле "{}": - {}'.format(getattr(form, field).label.text, error))
+                flash(
+                    'Ошибка в поле "{}": - {}'.format(
+                        getattr(form, field).label.text, error
+                    )
+                )
         return redirect(url_for("user.register"))

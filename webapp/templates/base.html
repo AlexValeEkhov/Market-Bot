@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<title>{{ page_title }}</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}"/>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/flaticon.css') }}"/>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css') }}"/>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.min.css') }}"/>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}"/>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}"/>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/flaticon.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.min.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
 
 	<!--[if lt IE 9]>
@@ -22,50 +23,56 @@
 	<![endif]-->
 
 </head>
+
 <body>
 
 	<!-- Header section -->
-    <header class="p-3 text-bg-dark">
+	<header class="p-3 text-bg-dark">
 		<div class="container">
-		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-			<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-			  <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-				<use xlink:href="#bootstrap" />
-			  </svg>
-			</a>
-  
-			<h5 class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-			  <li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
-			  <li><a href="/catalogue/album" class="nav-link px-2 text-white">Каталог</a></li>
-			  <li><a href="#" class="nav-link px-2 text-white">Художники</a></li>
-			  <li><a href="#" class="nav-link px-2 text-white">О нас</a></li>
-			</h5>
-  
-			<div class="text-end">
-				{% if current_user.is_authenticated %}
+			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+				<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+					<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+						<use xlink:href="#bootstrap" />
+					</svg>
+				</a>
+
+				<h5 class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+					<li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
+					<li><a href="/catalogue/album" class="nav-link px-2 text-white">Каталог</a></li>
+					<li><a href="#" class="nav-link px-2 text-white">Художники</a></li>
+					<li><a href="#" class="nav-link px-2 text-white">О нас</a></li>
+				</h5>
+
+				<div class="text-end">
+					{% if current_user.is_authenticated %}
 					<span class="btn btn-dark">Привет, {{ current_user.username }}!</span>
-				{% if current_user.is_admin %}
-                	<a href="/admin/admin" class="btn btn-success">Админ</a>
-				{% endif %}
+					<a class="btn btn-success" href="/cart/cart">
+						<img src="{{ url_for('static', filename='svg/cart-check.svg') }}" alt="Bootstrap" width="20" height="20" fill="currentColor">
+						Корзина
+					</a>
+					{% if current_user.is_admin %}
+					<a href="/admin/admin" class="btn btn-success">Админ</a>
+					{% endif %}
 					<a href="{{ url_for('user.logout') }}" class="btn btn-warning me-2">Выйти</a>
-				{% else %}
+					{% else %}
 					<a href="/users/registration" class="btn btn-secondary">Зарегистрироваться</a>
 					<a href="/users/login" class="btn btn-warning me-2">Войти</a>
-				{% endif %}
+					{% endif %}
+				</div>
 			</div>
-		  </div>
 		</div>
-	  </header>
+	</header>
 	<!-- Header section end -->
-    {% block content %}{% endblock %}
-    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.slicknav.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.nicescroll.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.zoom.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	{% block content %}{% endblock %}
+	<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.slicknav.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.nicescroll.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.zoom.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-    </body>
+</body>
+
 </html>
