@@ -46,13 +46,13 @@
 				<div class="text-end">
 					{% if current_user.is_admin %}
 					<a href="/admin/admin" class="btn btn-success">Админ</a>
+					{% endif %}
 					{% if current_user.is_authenticated %}
 					<span class="btn btn-dark">Привет, {{ current_user.name }}!</span>
 					<a class="btn btn-success" href="/cart/cart">
 						<img src="{{ url_for('static', filename='svg/cart-check.svg') }}" alt="Bootstrap" width="20" height="20" fill="currentColor">
 						Корзина</a>
 					<a class="btn btn-warning" href="{{ url_for('user.personal') }}">Ваш кабинет</a>
-					{% endif %}
 					<a href="{{ url_for('user.logout') }}" class="btn btn-warning me-2">Выйти</a>
 					{% else %}
 					<a href="/users/registration" class="btn btn-secondary">Зарегистрироваться</a>
