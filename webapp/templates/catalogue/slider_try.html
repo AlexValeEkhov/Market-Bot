@@ -26,41 +26,36 @@
     });
 </script>
 
-<div class="btn-wrapper">
-    <button class="btn btn-prev">ПРЕД</button>
-    <button class="btn btn-next">СЛЕД</button>
+<style>
+	.backgr {
+		background-color: rgba(0, 0, 0, 0.949);; 
+		color: #000000;
+	}
+</style>
+
+<body class="backgr">
+<div class="btn-wrapper" align="center">
+    <button class="btn btn-prev btn-light">
+        <<<< </button>
+            <button class="btn btn-next btn-light"> >>>> </button>
 </div>
+
 <div class="itcss">
     <div class="itcss__wrapper">
         <div class="itcss__items">
             {% for pic in pictures_list %}
             <div class="itcss__item">
-                <div class="col">
-                    <div class="card">
-                        <div class="container">
-                            <img src="{{ url_for('static', filename='pictures/' + pic.picture_url) }}"
-                                class="object-fit-cover" width="100%" height="100%">
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">"{{ pic.title }}" {{ names[pic.artist_id] }} {{ pic.year }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a type="button"
-                                        href="{{ url_for('catalogue.slider', pic_id=pic.id, pictures_list=pictures_list) }}"
-                                        class="btn btn-sm btn-outline-secondary">Просмотр</a>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
+                <div class="card">
+                    <div class="container">
+                        <img class="img1"
+                            src="{{ url_for('static', filename='pictures/'+ pic.artist.pictures_dir + '/' + pic.img) }}"
+                            class="object-fit-cover" width="1700px" height="100%">
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
-    <!-- Стрелки для перехода к предыдущему и следующему слайду -->
-    <a class="itcss__control itcss__control_prev" href="#" role="button" data-slide="prev"></a>
-    <a class="itcss__control itcss__control_next" href="#" role="button" data-slide="next"></a>
 </div>
+</body>
 {% endblock %}

@@ -1,8 +1,8 @@
 from getpass import getpass
+
 from webapp import create_app
 from webapp.db import db
-from webapp.user.models import User
-
+from webapp.models.user_models import User
 
 app = create_app()
 
@@ -10,9 +10,9 @@ with app.app_context():
     password = 'password'
     password2 = 'password2'
     while not password == password2:
-        username = input('Введите имя пользователя: ')
+        name = input('Введите имя пользователя: ')
 
-        if User.query.filter(User.username == username).count():
+        if User.query.filter(User.name == name).count():
             print("\nПользователь с таким именем уже существует.\n")
             continue
 
@@ -21,7 +21,7 @@ with app.app_context():
         if not password == password2:
             print('\nПароли не совпадают\n')
 
-    new_user = User(username=username, role='admin')
+    new_user = User(name=name, role='admin')
     new_user.set_password(password)
 
     db.session.add(new_user)

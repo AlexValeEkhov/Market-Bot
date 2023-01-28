@@ -9,4 +9,9 @@ class OrderForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
     )
+    phone = StringField(
+        "Номер телефона:",
+        validators=[DataRequired()],
+        render_kw={"class": "form-control"},
+    )
     submit = SubmitField("Оформить", render_kw={"class": "btn btn-primary"})

@@ -63,7 +63,7 @@
 
 <main>
 
-  <form action="{{ url_for('catalogue.album_filter') }}" method="post">
+  <form action="{{ url_for('catalogue.album_filter') }}" method="get">
     {{ form.hidden_tag() }}
     <div class="form-group">
       <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 justify-content-lg-start">
@@ -90,20 +90,21 @@
         <div class="col">
           <div class="card">
             <div class="container">
-              <img src="{{ url_for('static', filename='pictures/' + pic.picture_url) }}" class="object-fit-cover"
-                width="100%" height="225">
+              <a href="{{ url_for('catalogue.slider', pic_id=pic.id) }}">
+              <img src="{{ url_for('static', filename='pictures/'+ pic.artist.pictures_dir + '/' + pic.img) }}" class="object-fit-cover"
+                width="100%" height="225"></a>
             </div>
             <div class="card-body">
-              <p class="card-text">"{{ pic.title }}" {{ names[pic.artist_id] }}, {{ pic.year }}</p>
+              <p class="card-text">"{{ pic.title }}" {{ pic.artist.name }}, {{ pic.year }}, {{ pic.size }}, {{ pic.text }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a type="button"
-                    href="{{ url_for('catalogue.slider_try', pic_id=pic.id, pictures_list=pictures_list) }}"
+                    href="{{ url_for('catalogue.slider', pic_id=pic.id) }}"
                     class="btn btn-sm btn-outline-secondary">Просмотр</a>
-                  <a type="button" href="{{ url_for('cart.cart_add', pic_id=pic.id) }}"
-                    class="btn btn-sm btn-outline-secondary">В корзину</a>
+                  <div type="button" id="btn_add_cart" href="{{ url_for('cart.cart_add', pic_id=pic.id) }}" data-iditem="{{ pic.id }}"
+                    class="btn btn-sm btn-outline-secondary">В корзину</div>
                 </div>
-                <small class="text-muted">{{ pic.price}} р.</small>
+                <small class="text-muted">{{ pic.price }} р.</small>
               </div>
             </div>
           </div>
@@ -112,7 +113,19 @@
       </div>
     </div>
   </div>
-
+<script>
+  var btn = document.querySelectorAll("#btn_add_cart")
+  btn.forEach(item=>{
+    console.log(item)
+    item.addEventListener("click", function () { 
+      console.log("click")
+      var xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET", "/cart/cart_add/"+item.dataset.iditem, false ); 
+       xmlHttp.send( null );
+    } , false)
+  })
+  
+</script>
 </main>
 
 <footer class="text-muted py-5">

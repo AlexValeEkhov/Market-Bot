@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+	.content {
+		margin: 0 50px 0 50px; //top right bottom left
+	}
+</style>
+
+<main class="content">
+	<h3>Заказ N-{{ order.id }}</h3>
+	<div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 justify-content-lg-start">
+		<div class="col">
+			<h4>В заказе</h4>
+			<div>
+				{% for item in content|unique %}
+				<div> <img
+						src="{{ url_for('static', filename='pictures/' + item.artist.pictures_dir + '/' + item.img) }}"
+						class="object-fit-cover" width="150" height="75">
+					"{{ item.title }}", {{ item.artist.name}}. {{ item.year }} {{ item.size}} 
+					{{ item.text }}
+				</div>
+				<div>Кол-во: {{ content.count(item) }}</div>
+				{% endfor %}
+				<h4>Сумма: {{ order.sum }}</h4>
+				<h4>Статус заказа: {{ status_dict[order.status] }}</h4>
+				{% if not order.status == 4 %}
+				<a class="w-5 btn btn-lg btn-danger" href="{{ url_for('user.order_cancel', order_id=order.id) }}">Отменить</a>
+				{% else: %}
+				<h5>Спасибо за ваш заказ! Ждём вас снова!</h5>
+				{% endif %}
+			</div>
+		</div>
+		<div class="col">
+			<div> Адрес доставки заказа: {{ order.address }}</div>
+			<div> Ваш телефон: {{ order.phone }}</div>
+		</div>
+	</div>
+</main>
+{% endblock %}

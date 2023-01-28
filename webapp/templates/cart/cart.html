@@ -9,7 +9,7 @@
 </style>
 
 <main class="content">
-	<h2>Пользователь {{ user.username }}</h2>
+	<h2>Пользователь {{ user.name }}</h2>
 	{% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -24,9 +24,9 @@
 			<h3>В корзине</h3>
 			<div>
 				{% for item in order_list %}
-				<div> <img src="{{ url_for('static', filename='pictures/' + item[0].picture_url) }}"
-						class="object-fit-cover" width="150" height="75"> {{ item[0].title }} количество {{ item[1] }}
-					Cумма: {{ item[0].price*item[1] }}</div>
+				<div> <img src="{{ url_for('static', filename='pictures/' + item[0].artist.pictures_dir + '/' + item[0].img) }}"
+						class="object-fit-cover" width="150" height="75"> "{{ item[0].title }}", {{ item[0].artist.name}}. </div>
+					<div>Количество {{ item[1] }} Cумма: {{ item[0].price*item[1] }}</div>
 				<a class="btn btn-secondary" href="{{ url_for('cart.cart_plus', pic_id=item[0].id) }}">+1</a><a
 					class="btn btn-secondary" href="{{ url_for('cart.cart_minus', pic_id=item[0].id) }}">-1</a>
 				{% endfor %}
@@ -34,11 +34,15 @@
 			<h3>Итого: {{ total }}</h3>
 		</div>
 		<div class="col">
-			Введите адрес доставки:
+			{{ form.address.label() }}:
 			<form action="{{ url_for('cart.checkout', sum=total) }}" method="post">
 				{{ form.hidden_tag() }}
 				<div class="form-group">
 					{{ form.address() }}
+				</div>
+				<div class="form-group">
+					{{ form.phone.label() }}
+					{{ form.phone() }}
 				</div>
 				{{ form.submit() }}
 			</form>

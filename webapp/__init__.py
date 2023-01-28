@@ -22,7 +22,7 @@ def create_app():
 
     @app.route("/")
     def main():
-        title = "Blackhole Inc"
+        title = "WaterColor Dream"
         return render_template("main.html", page_title=title)
 
     app.register_blueprint(user_blueprint)

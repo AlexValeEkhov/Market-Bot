@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .content {
+        margin: 25px 25px 25px 25px; // top right bottom left
+    }
+</style>
+
+<main class="content">
+    <form action="{{ url_for('admin.picture_editing', pic_id=picture.id) }}" method="post">
+        <div class="form-group">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                Название: ({{ picture.title }})
+                {{ form.title() }}
+            </div>
+            <div class="form-group">
+                О картине: ({{ picture.text }})
+                {{ form.text() }}
+            </div>
+            <div class="form-group">
+                Фотография: ({{ picture.img }})
+                {{ form.img() }}
+            </div>
+            <div class="form-group">
+                Год: ({{ picture.year }})
+                {{ form.year() }}
+            </div>
+            <div class="form-group">
+                Художник: ({{ picture.artist.name }})
+                {{ form.artist_id() }}
+            </div>
+            <div class="form-group">
+                Размеры: ({{ picture.size }})
+                {{ form.size() }}
+            </div>
+            <div class="form-group">
+                Цена: ({{ picture.price }})
+                {{ form.price() }}
+            </div>
+            {{ form.submit }}
+        </div>
+    </form>
+</main>
+
+{% endblock %}

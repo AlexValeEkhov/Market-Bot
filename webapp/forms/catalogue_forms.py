@@ -14,11 +14,17 @@ class ArtistForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
     )
-    photo_url = FileField(
+    img = FileField(
         "Фотография",
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
     )
+    pictures_dir = StringField(
+        "Имя каталога для картин",
+        validators=[DataRequired()],
+        render_kw={"class": "form-control"},
+    )
+
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
 
@@ -32,9 +38,9 @@ class PictureForm(FlaskForm):
         "Цена", validators=[DataRequired()], render_kw={"class": "form-control"}
     )
     text = TextAreaField(
-        "Описание", validators=[DataRequired()], render_kw={"class": "form-control"}
+        "Описание", render_kw={"class": "form-control"}
     )
-    picture_url = FileField(
+    img = FileField(
         "Файл изображения",
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
@@ -43,7 +49,7 @@ class PictureForm(FlaskForm):
         "Год", validators=[DataRequired()], render_kw={"class": "form-control"}
     )
     artist_id = SelectField(
-        'Художник',
+        "Художник",
         render_kw={"class": "form-control"},
     )
     size = StringField(
@@ -54,6 +60,56 @@ class PictureForm(FlaskForm):
 
 class FilterByArtistForm(FlaskForm):
     artist_id = SelectField(
-        'Выбрать художника',
-        render_kw={"class": "form-control"},)
+        "Выбрать художника",
+        render_kw={"class": "form-control"},
+    )
+    submit = SubmitField("Выбрать", render_kw={"class": "btn btn-primary"})
+
+
+class ArtistEditForm(FlaskForm):
+    name = StringField(
+        "Имя художника",
+        render_kw={"class": "form-control"},
+    )
+    text = TextAreaField(
+        "О художнике",
+        render_kw={"class": "form-control"},
+    )
+    img = FileField(
+        "Фотография",
+        render_kw={"class": "form-control"},
+    )
+    pictures_dir = StringField(
+        "Имя каталога для картин",
+        render_kw={"class": "form-control"},
+    )
+
+    submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
+
+
+class PictureEditForm(FlaskForm):
+    title = StringField(
+        "Название картины",
+        render_kw={"class": "form-control"},
+    )
+    price = StringField(
+        "Цена", render_kw={"class": "form-control"}
+    )
+    text = TextAreaField(
+        "Описание", render_kw={"class": "form-control"}
+    )
+    img = FileField(
+        "Файл изображения",
+        render_kw={"class": "form-control"},
+    )
+    year = StringField(
+        "Год", render_kw={"class": "form-control"}
+    )
+    artist_id = SelectField(
+        "Художник",
+        render_kw={"class": "form-control"},
+    )
+    size = StringField(
+        "Размер", render_kw={"class": "form-control"}
+    )
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})

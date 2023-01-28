@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.content {
+    margin: 25px 25px 25px 25px; // top right bottom left
+}
+</style>
+
+<main class="content">
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="container">
+                <img src="{{ url_for('static', filename='artists/'+ artist.img) }}" class="object-fit-cover"
+                    width="500px" height="500px">
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <h3>{{ artist.name }}</h3>
+        {{ artist.text }}
+    </div>
+</div>
+</main>
+{% endblock %}

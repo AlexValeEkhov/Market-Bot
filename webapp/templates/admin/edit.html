@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .content {
+        margin: 25px 25px 25px 25px; // top right bottom left
+    }
+</style>
+
+<main class="content">
+    <h4 align="center">{{ artist.name }}</h4>
+    <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 justify-content-lg-start">
+        <div class="col">
+            <form action="{{ url_for('admin.artist_editing', artist_id=artist.id) }}" method="post">
+                <div class="form-group">
+                    {{ form.hidden_tag() }}
+                    <p>Имя: ({{ artist.name }})</p>
+                    {{ form.name() }}
+                    <p>___</p>
+                    <p>О художнике: ({{ artist.text }})</p>
+                    {{ form.text() }}
+                    <p>___</p>
+                    <p>Фотография: ({{ artist.img }})</p>
+                    {{ form.img() }}
+                    <p>___</p>
+                    <p>Имя каталога для картин: ({{ artist.pictures_dir }})</p>
+                    {{ form.pictures_dir() }}
+                    {{ form.submit }}
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <h5 align="center">Картины:</h5>
+            {% for pic in pictures_list %}
+            <div class="row">
+                <div align="right" class="col">
+                    <a href="{{ url_for('admin.picture_edit',pic_id=pic.id) }}">Редактировать:</a> 
+                </div>
+                <div class="col">
+                    {{ pic.title }}, {{ pic.year }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+{% endblock %}

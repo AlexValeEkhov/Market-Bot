@@ -6,7 +6,7 @@ from webapp.models.user_models import User
 
 
 class LoginForm(FlaskForm):
-    username = StringField(
+    name = StringField(
         "Имя пользователя",
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
@@ -20,8 +20,20 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
 
+class AskResetForm(FlaskForm):
+    email = StringField('Электронная почта', validators=[DataRequired(), Email()],  render_kw={"class": "form-control"})
+    submit = SubmitField('Запросить сброс пароля', render_kw={"class": "btn btn-primary"})
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Пароль', validators=[DataRequired()], render_kw={"class": "form-control"})
+    password2 = PasswordField(
+        'Повторите пароль', validators=[DataRequired(), EqualTo('password')], render_kw={"class": "form-control"})
+    submit = SubmitField('Сменить пароль', render_kw={"class": "btn btn-primary"})
+
+
 class RegistrationForm(FlaskForm):
-    username = StringField(
+    name = StringField(
         "Имя пользователя",
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
@@ -35,16 +47,18 @@ class RegistrationForm(FlaskForm):
         "Пароль", validators=[DataRequired()], render_kw={"class": "form-control"}
     )
     password2 = PasswordField(
-        "Повторите пароль", validators=[DataRequired(), EqualTo('password')], render_kw={"class": "form-control"}
+        "Повторите пароль",
+        validators=[DataRequired(), EqualTo("password")],
+        render_kw={"class": "form-control"},
     )
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
-    def validate_username(self, username):
-        user_count = User.query.filter_by(username=username.data).count()
+    def validate_username(self, name):
+        user_count = User.query.filter_by(name=name.data).count()
         if user_count > 0:
-            raise ValidationError('Пользователь с таким именем уже существует')
+            raise ValidationError("Пользователь с таким именем уже существует")
 
     def validate_email(self, email):
         user_count = User.query.filter_by(email=email.data).count()
         if user_count > 0:
-            raise ValidationError('Пользователь с таким адресом почты уже существует')
+            raise ValidationError("Пользователь с таким адресом почты уже существует")

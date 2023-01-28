@@ -39,19 +39,19 @@
 				<h5 class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 					<li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
 					<li><a href="/catalogue/album" class="nav-link px-2 text-white">Каталог</a></li>
-					<li><a href="#" class="nav-link px-2 text-white">Художники</a></li>
+					<li><a href="/catalogue/artist-list" class="nav-link px-2 text-white">Художники</a></li>
 					<li><a href="#" class="nav-link px-2 text-white">О нас</a></li>
 				</h5>
 
 				<div class="text-end">
-					{% if current_user.is_authenticated %}
-					<span class="btn btn-dark">Привет, {{ current_user.username }}!</span>
-					<a class="btn btn-success" href="/cart/cart">
-						<img src="{{ url_for('static', filename='svg/cart-check.svg') }}" alt="Bootstrap" width="20" height="20" fill="currentColor">
-						Корзина
-					</a>
 					{% if current_user.is_admin %}
 					<a href="/admin/admin" class="btn btn-success">Админ</a>
+					{% if current_user.is_authenticated %}
+					<span class="btn btn-dark">Привет, {{ current_user.name }}!</span>
+					<a class="btn btn-success" href="/cart/cart">
+						<img src="{{ url_for('static', filename='svg/cart-check.svg') }}" alt="Bootstrap" width="20" height="20" fill="currentColor">
+						Корзина</a>
+					<a class="btn btn-warning" href="{{ url_for('user.personal') }}">Ваш кабинет</a>
 					{% endif %}
 					<a href="{{ url_for('user.logout') }}" class="btn btn-warning me-2">Выйти</a>
 					{% else %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .content {
+        margin: 0 50px 0 50px; //top right bottom left
+    }
+</style>
+<main class="content">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 justify-content-lg-start">
+        <div class="col">
+            <h3>Ваши заказы</h3>
+            <div>
+                {% for order in orders %}
+                <div>Заказ N{{ order.id }} на сумму {{ order.sum }}. Статус заказа: {{ status_dict[order.status] }} -
+                    <a href="{{ url_for('user.order', order_id=order.id) }}">Детали заказа</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

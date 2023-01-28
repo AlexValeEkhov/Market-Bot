@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+	.backgr {
+		background-color: rgba(40, 39, 39, 0.43);; 
+		color: #000000;
+	}
+</style>
+
 <!-- Page Preloder -->
 <div id="preloder">
 	<div class="loader"></div>
@@ -8,54 +15,42 @@
 <!-- Hero section -->
 <section class="hero-section">
 	<div class="hero-slider owl-carousel">
-		<div class="hs-item set-bg" data-setbg="{{ url_for('static', filename='img/blackhole.jpg') }}">
+		<div class="hs-item set-bg" data-setbg="{{ url_for('static', filename='img/main.jpg') }}">
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-6 col-lg-7 text-white">
-						<span>Специальное предложение</span>
-						<h2>Чёрная дыра</h2>
-						<p>Купите чёрную дыру и получите в подарок искривление пространственно-временного континуума. Только самовывоз! </p>
-						<a href="#" class="site-btn sb-white">Добавить в корзину</a>
+						<span class="backgr">Магазин жикле WaterColor Dream представляет</span>
+						<h2 class="backgr">Ольга Ивлева</h2>
+						<p class="backgr">Купите чёрную дыру и получите в подарок искривление пространственно-временного
+							континуума. Только самовывоз! </p>
+						<a href="/catalogue/album" class="site-btn sb-white">В альбом</a>
 					</div>
-				</div>
-				<div class="offer-card text-white">
-					<span>от</span>
-					<h2>1</h2>
-					<p>миллиона</p>
 				</div>
 			</div>
 		</div>
-		<div class="hs-item set-bg" data-setbg="{{ url_for('static', filename='img/blackhole2.jpg') }}">
+		<div class="hs-item set-bg" data-setbg="{{ url_for('static', filename='img/main2.jpg') }}">
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-6 col-lg-7 text-white">
-						<span>Специальное предложение</span>
-						<h2>Чёрная дыра</h2>
-						<p>Купите чёрную дыру и получите в подарок искривление пространственно-временного континуума. Только самовывоз! </p>
-						<a href="#" class="site-btn sb-white">Добавить в корзину</a>
+						<span class="backgr">Магазин жикле WaterColor Dream представляет</span>
+						<h2 class="backgr">Владимир Колбасов</h2>
+						<p class="backgr">Купите чёрную дыру и получите в подарок искривление пространственно-временного континуума.
+							Только самовывоз! </p>
+						<a href="/catalogue/album" class="site-btn sb-white">В альбом</a>
 					</div>
-				</div>
-				<div class="offer-card text-white">
-					<span>Бери</span>
-					<h2>ПОКА</h2>
-					<p>дают!</p>
 				</div>
 			</div>
 		</div>
-		<div class="hs-item set-bg" data-setbg="{{ url_for('static', filename='img/blackhole3.jpg') }}">
+		<div class="hs-item set-bg" data-setbg="{{ url_for('static', filename='img/main3.jpg') }}">
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-6 col-lg-7 text-white">
-						<span>Специальное предложение</span>
-						<h2>Чёрная дыра</h2>
-						<p>Купите чёрную дыру и получите в подарок искривление пространственно-временного континуума. Только самовывоз! </p>
-						<a href="#" class="site-btn sb-white">Добавить в корзину</a>
+						<span>Магазин жикле WaterColor Dream представляет</span>
+						<h2>Евгений Дубицкий</h2>
+						<p>Купите чёрную дыру и получите в подарок искривление пространственно-временного континуума.
+							Только самовывоз! </p>
+						<a href="/catalogue/album" class="site-btn sb-white">В альбом</a>
 					</div>
-				</div>
-				<div class="offer-card text-white">
-					<span></span>
-					<h2>Самовывоз</h2>
-					<p>бесплатно</p>
 				</div>
 			</div>
 		</div>

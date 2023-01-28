@@ -1,7 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>{{ name }}</h3>
-<img src="{{ url_for('static', filename=photo)}}">
-<h4>{{ text }}</h4>
+<style>
+    .circle {
+        width: 150px;
+        /* задаете свои размеры */
+        height: 150px;
+        overflow: hidden;
+        background: rgb(105, 104, 100);
+        padding: 5px;
+        /* создание отступов */
+        border-radius: 50%;
+        /* не забываем о кроссбраузерности */
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border: #aaa 1px solid;
+        box-shadow: 0px 1px 1px 1px #bbb;
+        /* тень */
+        -moz-box-shadow: 0px 1px 1px 1px #bbb;
+        -webkit-box-shadow: 0px 1px 1px 1px #bbb;
+    }
+
+    .circle img {
+        display: block;
+        width: 100%;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+    }
+
+    .content {
+        margin: 50px 50px 50px 250px; // top right bottom left
+    }
+</style>
+
+<main class="content">
+    <div class="row">
+        {% for artist in artist_list %}
+        <div class="col-lg-4">
+            <div class="circle">
+                <a href="{{url_for('catalogue.artist', artist_id=artist.id) }}">
+                    <img src="{{ url_for('static', filename='artists/' +'sm-' + artist.img) }}" alt="" />
+                </a>
+            </div>
+            <h4 class="fw-normal">{{ artist.name }}</h4>
+        </div>
+        {% endfor %}
+    </div>
+</main>
 {% endblock %}

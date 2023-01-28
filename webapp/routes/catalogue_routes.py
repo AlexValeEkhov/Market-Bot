@@ -1,60 +1,55 @@
-from flask import Blueprint, redirect, render_template, url_for  # , flash
+from flask import Blueprint, render_template, request
+from flask_login import current_user
 
-from webapp.functions.decorators import get_artist_names
-from webapp.models.catalogue_models import Artist, Product
+from webapp import db
+from webapp.forms.catalogue_forms import FilterByArtistForm
+from webapp.functions.decorators import get_artist_names, sort_pics_for_slider
+from webapp.models.catalogue_models import Artist, Filter, Picture
 
 blueprint = Blueprint("catalogue", __name__, url_prefix="/catalogue")
 
 
-@blueprint.route("/artist")
-def artist():
-    id = 11
-    artist = Artist.query.filter_by(id=id).first()
-    name = artist.name
-    photo = f"artist/{artist.photo_url}"
-    text = artist.text
-    return render_template("catalogue/artists.html", name=name, text=text, photo=photo)
+@blueprint.route("/artist-list")
+def artist_list():
+    artist_list = Artist.query.all()
+    return render_template("catalogue/artists.html", artist_list=artist_list)
 
 
-@blueprint.route("/album")
-def album():
-    choices, form, names = get_artist_names()
-    form.artist_id.choices = choices
-    pictures_list = Product.query.all()
-    # pictures_list = sorted(pictures_list, key=lambda pic: pic.year) Сортировка по году
-    return render_template(
-        "catalogue/album.html", form=form, pictures_list=pictures_list, names=names
-    )
+@blueprint.route("/artist/<int:artist_id>")
+def artist(artist_id):
+    artist = Artist.query.filter_by(id=artist_id).first()
+    return render_template("catalogue/artist.html", artist=artist)
 
 
-@blueprint.route("/album_filter", methods=["POST", "GET"])
+@blueprint.route("/album", methods=["POST", "GET"])
 def album_filter():
-    choices, form, names = get_artist_names()
+    filter = Filter.query.filter_by(user_id=current_user.id).first()
+    if filter:
+        db.session.delete(filter)  # сделать фильтр НЕ через БД!
+        db.session.commit()
+    choices, form = get_artist_names()
+    form = FilterByArtistForm(request.args)
     form.artist_id.choices = choices
-    if form.is_submitted():
-        print(form.artist_id.data)
+    pictures_list = Picture.query.all()
+    if form.validate():
         if form.artist_id.data == "placeholder":
-            pictures_list = Product.query.all()
+            pictures_list = Picture.query.all()
         else:
-            pictures_list = Product.query.filter_by(artist_id=form.artist_id.data)
-    return render_template(
-        "catalogue/album.html", form=form, pictures_list=pictures_list, names=names
-    )
+            pictures_list = Picture.query.filter_by(artist_id=form.artist_id.data)
+            filter = Filter(user_id=current_user.id, artist_id=form.artist_id.data)
+            db.session.add(filter)
+            db.session.commit()
+    return render_template("catalogue/album.html", form=form, pictures_list=pictures_list)
 
 
-@blueprint.route("/slider/<int:pic_id>")
+@blueprint.route("/slider/<int:pic_id>", methods=["POST", "GET"])
 def slider(pic_id):
-    choices, form, names = get_artist_names()
-    picture = Product.query.filter(Product.id == pic_id).first()
-    if not picture:
-        return redirect(url_for("catalogue.album"))
-    return render_template("catalogue/slider.html", pic=picture, names=names)
+    filter = Filter.query.filter_by(user_id=current_user.id).first()
+    if filter:
+        pictures_list = Picture.query.filter_by(artist_id=filter.artist_id).all()
+        pictures_list = sort_pics_for_slider(pictures_list, pic_id)
+    else:
+        pictures_list = Picture.query.all()
+        pictures_list = sort_pics_for_slider(pictures_list, pic_id)
 
-
-@blueprint.route("/slider/try")
-def slider_try():
-    choices, form, names = get_artist_names()
-    pictures_list = Product.query.all()
-    return render_template(
-        "catalogue/slider_try.html", pictures_list=pictures_list, names=names
-    )
+    return render_template("catalogue/slider_try.html", pictures_list=pictures_list)

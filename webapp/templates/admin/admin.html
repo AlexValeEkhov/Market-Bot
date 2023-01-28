@@ -1,21 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .content {
+        margin: 25px 25px 25px 25px; // top right bottom left
+    }
+</style>
+
 {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-success" role="alert">
-                {{ message }}
-            </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
 
 <body>
-    <h2 style="text-align:center">Панель управления миром</h2>
-
-    <a href="/admin/add_artist" class="btn btn-success">Добавить художника</a>
-    <a href="/admin/add_picture" class="btn btn-success">Добавить картину</a>
-    <a href="/catalogue/artist" class="btn btn-success">Показать художника</a>
+    <main class="content">
+        <h2 style="text-align:center">Панель управления миром</h2>
+        <a href="/admin/add_artist" class="btn btn-success">Добавить художника</a>
+        <a href="/admin/add_picture" class="btn btn-success">Добавить картину</a>
+        <h4>Редактировать базу</h4>
+        <form action="{{ url_for('admin.admin') }}" method="post">
+            <div class="form-group">
+                <p>{{ form.hidden_tag() }}</p>
+                <p>{{ form.artist_id.label }}</p>
+                <p>{{ form.artist_id() }}</p>
+                <button class="btn btn btn-primary" type="submit">Выбрать</button>
+            </div>
+        </form>
+    </main>
 </body>
 {% endblock %}

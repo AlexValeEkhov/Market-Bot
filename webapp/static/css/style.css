@@ -145,8 +145,8 @@ ol {
 }
 
 .site-btn.sb-white {
-	background: #fff;
-	color: #111111;
+	background: rgba(255, 254, 254, 0.86);
+	color: #090909;
 }
 
 .site-btn.sb-line {
